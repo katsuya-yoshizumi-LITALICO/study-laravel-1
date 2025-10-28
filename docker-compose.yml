@@ -15,7 +15,9 @@ services:
       - DB_DATABASE=laravel
       - DB_USERNAME=laravel
       - DB_PASSWORD=secret
-    command: php -S 0.0.0.0:8000 -t public
+  command: php -S 0.0.0.0:8000 -t public
+  tty: true
+  stdin_open: true
   db:
     image: mysql:8.0
     container_name: laravel_db
