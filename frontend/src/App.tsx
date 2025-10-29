@@ -47,9 +47,9 @@ function App() {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-4">
+    <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">掲示板SPA</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="mb-6 space-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-6">
         <Input
           type="text"
           placeholder="タイトル"
@@ -61,7 +61,8 @@ function App() {
         <Textarea
           placeholder="本文"
           {...register('body', { required: '本文は必須です' })}
-          rows={3}
+          rows={5}
+          className="min-h-[160px]"
         />
         {errors.body && (
           <p className="text-red-500 text-sm">{errors.body.message}</p>
