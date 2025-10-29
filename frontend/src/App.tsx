@@ -1,5 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useForm } from 'react-hook-form';
 
 type Post = {
   id: number;
@@ -11,9 +15,13 @@ type Post = {
 const API_URL = 'http://localhost:8000/api/posts';
 
 function App() {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<{ title: string; body: string }>();
   const [posts, setPosts] = useState<Post[]>([]);
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -28,38 +36,36 @@ function App() {
     setLoading(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (data: { title: string; body: string }) => {
     await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, body }),
+      body: JSON.stringify(data),
     });
-    setTitle('');
-    setBody('');
+    reset();
     fetchPosts();
   };
 
   return (
     <div className="max-w-xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">掲示板SPA</h1>
-      <form onSubmit={handleSubmit} className="mb-6 space-y-4">
-        <input
+      <form onSubmit={handleSubmit(onSubmit)} className="mb-6 space-y-4">
+        <Input
           type="text"
           placeholder="タイトル"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-          className="w-full border rounded px-3 py-2"
+          {...register('title', { required: 'タイトルは必須です' })}
         />
-        <textarea
+        {errors.title && (
+          <p className="text-red-500 text-sm">{errors.title.message}</p>
+        )}
+        <Textarea
           placeholder="本文"
-          value={body}
-          onChange={(e) => setBody(e.target.value)}
-          required
-          className="w-full border rounded px-3 py-2"
+          {...register('body', { required: '本文は必須です' })}
           rows={3}
         />
+        {errors.body && (
+          <p className="text-red-500 text-sm">{errors.body.message}</p>
+        )}
         <Button type="submit">投稿</Button>
       </form>
       <h2 className="text-xl font-semibold mb-2">投稿一覧</h2>
@@ -67,11 +73,15 @@ function App() {
         <p>読み込み中...</p>
       ) : (
         posts.map((post) => (
-          <div key={post.id} className="border rounded p-3 mb-2">
-            <div className="font-bold">{post.title}</div>
-            <div>{post.body}</div>
-            <div className="text-xs text-gray-500">{post.created_at}</div>
-          </div>
+          <Card key={post.id} className="mb-2">
+            <CardHeader>
+              <CardTitle>{post.title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div>{post.body}</div>
+              <div className="text-xs text-gray-500 mt-2">{post.created_at}</div>
+            </CardContent>
+          </Card>
         ))
       )}
     </div>
