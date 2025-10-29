@@ -6,13 +6,9 @@ use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
 	abort(404);
-});
 
-// API routes
-Route::get('/api/posts', [PostController::class, 'apiIndex']);
-Route::post('/api/posts', [PostController::class, 'apiStore']);
-Route::options('/api/posts', function () {
-	return response('', 204);
+// The API routes have been moved to api.php
+// Route definitions for /api/posts are now managed there.
 });
 
 Route::get('/create', [PostController::class, 'create'])->name('posts.create');

@@ -7,11 +7,20 @@ use Illuminate\Foundation\Configuration\Middleware;
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
+        api: __DIR__.'/../routes/api.php',  // ← apiルートを追加
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // APIルートをCSRF保護から除外
+        $middleware->validateCsrfTokens(except: [
+            'api/*',
+        ]);
+        
+        // CORSミドルウェアのエイリアス登録
+        $middleware->alias([
+            'cors' => \App\Http\Middleware\HandleCors::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
