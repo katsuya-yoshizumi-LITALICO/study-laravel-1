@@ -36,10 +36,10 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
+            'title' => 'required|max:255',
             'body' => 'required',
         ]);
-        Post::create($request->only(['name', 'body']));
+        Post::create($request->only(['title', 'body']));
         return redirect()->route('posts.index');
     }
 
@@ -67,10 +67,10 @@ class PostController extends Controller
     public function apiStore(Request $request)
     {
         $request->validate([
-            'name' => 'required|max:255',
+            'title' => 'required|max:255',
             'body' => 'required',
         ]);
-        $post = Post::create($request->only(['name', 'body']));
+        $post = Post::create($request->only(['title', 'body']));
         return response()->json($post, 201);
     }
 }
