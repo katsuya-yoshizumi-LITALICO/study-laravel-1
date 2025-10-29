@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 
 type Post = {
   id: number;
-  name: string;
+  title: string;
   body: string;
   created_at: string;
 };
@@ -12,7 +12,7 @@ const API_URL = 'http://localhost:8000/api/posts';
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -33,10 +33,9 @@ function App() {
     await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, body }),
-      // credentials: 'include' を削除！
+      body: JSON.stringify({ title, body }),
     });
-    setName('');
+    setTitle('');
     setBody('');
     fetchPosts();
   };
@@ -47,9 +46,9 @@ function App() {
       <form onSubmit={handleSubmit} className="mb-6 space-y-4">
         <input
           type="text"
-          placeholder="名前"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          placeholder="タイトル"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
           required
           className="w-full border rounded px-3 py-2"
         />
@@ -69,7 +68,7 @@ function App() {
       ) : (
         posts.map((post) => (
           <div key={post.id} className="border rounded p-3 mb-2">
-            <div className="font-bold">{post.name}</div>
+            <div className="font-bold">{post.title}</div>
             <div>{post.body}</div>
             <div className="text-xs text-gray-500">{post.created_at}</div>
           </div>
