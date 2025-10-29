@@ -49,14 +49,14 @@ function App() {
           type="text"
           placeholder="名前"
           value={name}
-          onChange={e => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value)}
           required
           className="w-full border rounded px-3 py-2"
         />
         <textarea
           placeholder="本文"
           value={body}
-          onChange={e => setBody(e.target.value)}
+          onChange={(e) => setBody(e.target.value)}
           required
           className="w-full border rounded px-3 py-2"
           rows={3}
@@ -64,8 +64,10 @@ function App() {
         <Button type="submit">投稿</Button>
       </form>
       <h2 className="text-xl font-semibold mb-2">投稿一覧</h2>
-      {loading ? <p>読み込み中...</p> : (
-        posts.map(post => (
+      {loading ? (
+        <p>読み込み中...</p>
+      ) : (
+        posts.map((post) => (
           <div key={post.id} className="border rounded p-3 mb-2">
             <div className="font-bold">{post.name}</div>
             <div>{post.body}</div>
