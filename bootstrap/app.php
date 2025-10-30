@@ -16,11 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'api/*',
         ]);
-        
-        // CORSミドルウェアのエイリアス登録
-        $middleware->alias([
-            'cors' => \App\Http\Middleware\HandleCors::class,
-        ]);
+
+        // CORSミドルウェアをグローバルに適用
+        $middleware->append(\App\Http\Middleware\HandleCors::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
