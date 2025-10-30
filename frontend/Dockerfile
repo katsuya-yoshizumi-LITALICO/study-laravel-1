@@ -13,14 +13,14 @@ RUN apt-get clean && \
     apt-get install -y bash tzdata xdg-utils git python3 make g++ && \
     rm -rf /var/lib/apt/lists/*
 
-# package.jsonとpackage-lock.json（存在する場合）をコピー
+# package.jsonとpackage-lock.jsonをコピー
 COPY package*.json ./
 
-# node_modulesとキャッシュをクリアして再インストール（legacy-peer-depsを使用）
+# node_modulesとキャッシュをクリアして再インストール
 RUN npm cache clean --force && \
     rm -rf node_modules package-lock.json && \
-    npm install --legacy-peer-deps && \
     npm rebuild && \
+    npm i && \
     chmod -R 777 node_modules
 
 # アプリケーションコードをコピー
