@@ -1,6 +1,8 @@
 <?php
 namespace App\Http;
 
+use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -11,7 +13,7 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
-        // HandleCorsは不要になったため削除
+        // Global HTTP middleware
     ];
 
     /**
@@ -36,27 +38,5 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         // ...existing route middleware...
-        'cors' => \App\Http\Middleware\Cors::class,
     ];
-
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return \Illuminate\Http\Response
-     */
-    public function handle(Request $request, Closure $next)
-    {
-        if ($request->getMethod() === "OPTIONS") {
-            $response = response('', 204);
-        } else {
-            $response = $next($request);
-        }
-        $response->headers->set('Access-Control-Allow-Origin', 'http://localhost:5173');
-        $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-        $response->headers->set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        $response->headers->set('Access-Control-Allow-Credentials', 'true');
-        return $response;
-    }
 }
