@@ -4,6 +4,8 @@ import { Input } from '@/components/ui/input';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
+import { format } from 'date-fns';
+import { ja } from 'date-fns/locale';
 
 type Post = {
   id: number;
@@ -67,7 +69,7 @@ function App() {
         {errors.body && (
           <p className="text-red-500 text-sm">{errors.body.message}</p>
         )}
-        <Button type="submit">投稿</Button>
+        <Button type="submit" variant="outline" className="mt-6">投稿</Button>
       </form>
       <h2 className="text-xl font-semibold mb-2">投稿一覧</h2>
       {loading ? (
@@ -80,7 +82,9 @@ function App() {
             </CardHeader>
             <CardContent>
               <div>{post.body}</div>
-              <div className="text-xs text-gray-500 mt-2">{post.created_at}</div>
+              <div className="text-xs text-gray-500 mt-2">
+                {format(new Date(post.created_at), 'yyyy年MM月dd日 HH:mm', { locale: ja })}
+              </div>
             </CardContent>
           </Card>
         ))
