@@ -62,7 +62,7 @@ function App() {
           placeholder="本文"
           {...register('body', { required: '本文は必須です' })}
           rows={5}
-          className="min-h-[160px]"
+          className="min-h-[160px] mt-6"
         />
         {errors.body && (
           <p className="text-red-500 text-sm">{errors.body.message}</p>
@@ -74,7 +74,7 @@ function App() {
         <p>読み込み中...</p>
       ) : (
         posts.map((post) => (
-          <Card key={post.id} className="mb-2">
+          <Card key={post.id} className="mb-6">
             <CardHeader>
               <CardTitle>{post.title}</CardTitle>
             </CardHeader>
