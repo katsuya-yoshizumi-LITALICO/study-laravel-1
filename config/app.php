@@ -123,4 +123,17 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | CORS Allowed Origins
+    |--------------------------------------------------------------------------
+    |
+    | This value determines which origins are allowed to make cross-origin
+    | requests to your application. Use '*' to allow all origins (less secure)
+    | or specify a specific origin like 'http://localhost:5173'.
+    |
+    */
+
+    'cors_allowed_origins' => env('CORS_ALLOWED_ORIGINS', '*'),
+
 ];

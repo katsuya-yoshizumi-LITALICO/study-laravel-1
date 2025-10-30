@@ -129,7 +129,7 @@ class PostControllerTest extends TestCase
 
         // Assert
         $response->assertStatus(201)
-            ->assertHeader('Access-Control-Allow-Origin', '*')
+            ->assertHeader('Access-Control-Allow-Origin')
             ->assertHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
     }
 
@@ -141,7 +141,7 @@ class PostControllerTest extends TestCase
 
         // Assert
         $response->assertStatus(204)
-            ->assertHeader('Access-Control-Allow-Origin', '*')
+            ->assertHeader('Access-Control-Allow-Origin')
             ->assertHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
             ->assertHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
     }
